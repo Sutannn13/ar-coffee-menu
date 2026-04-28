@@ -14,7 +14,7 @@ const coffeeMenus = [
     category: "Classic",
     color: "#6d4c41",
     lidColor: "#24120d",
-    cupScale: "0.45 0.45 0.45",
+    cupScale: "0.35 0.35 0.35",
   },
   {
     id: 2,
@@ -24,7 +24,7 @@ const coffeeMenus = [
     category: "Milk Based",
     color: "#8d6e63",
     lidColor: "#3b2118",
-    cupScale: "0.46 0.46 0.46",
+    cupScale: "0.35 0.35 0.35",
   },
   {
     id: 3,
@@ -34,7 +34,7 @@ const coffeeMenus = [
     category: "Signature",
     color: "#a16a43",
     lidColor: "#4a2617",
-    cupScale: "0.46 0.47 0.46",
+    cupScale: "0.35 0.35 0.35",
   },
   {
     id: 4,
@@ -44,7 +44,7 @@ const coffeeMenus = [
     category: "Non-Coffee",
     color: "#6f8f45",
     lidColor: "#2f3b1e",
-    cupScale: "0.46 0.47 0.46",
+    cupScale: "0.35 0.35 0.35",
   },
   {
     id: 5,
@@ -54,7 +54,7 @@ const coffeeMenus = [
     category: "Iced",
     color: "#5d4037",
     lidColor: "#1d100c",
-    cupScale: "0.45 0.48 0.45",
+    cupScale: "0.35 0.35 0.35",
   },
 ];
 
@@ -64,9 +64,10 @@ let isRotating = false;
 let isInfoVisible = true;
 let markerVisible = false;
 
-const BASE_CUP_POSITION = "0 0.25 0";
+const BASE_CUP_POSITION = "0 0.15 0";
 const BASE_CUP_ROTATION = "-15 0 0";
 const SPIN_CUP_ROTATION = "-15 360 0";
+const BASE_CUP_SCALE = "0.35 0.35 0.35";
 
 // ---------- DOM Elements ----------
 const menuCard = document.getElementById("menu-card");
@@ -103,23 +104,13 @@ function updateMenuDisplay() {
 
 // ---------- Update Model 3D Kopi ----------
 function updateCoffeeModel(menu) {
-  const cupBodyParts = document.querySelectorAll("[data-cup-color='body']");
-  const cupLid = document.getElementById("cup-lid-3d");
   const cupGroup = document.getElementById("cup-group");
   const labelName = document.getElementById("label-name");
   const labelPrice = document.getElementById("label-price");
 
-  cupBodyParts.forEach((part) => {
-    part.setAttribute("color", menu.color);
-  });
-
-  if (cupLid) {
-    cupLid.setAttribute("color", menu.lidColor);
-  }
-
   if (cupGroup) {
     cupGroup.setAttribute("position", BASE_CUP_POSITION);
-    cupGroup.setAttribute("scale", menu.cupScale);
+    cupGroup.setAttribute("scale", BASE_CUP_SCALE);
     if (!isRotating) {
       cupGroup.setAttribute("rotation", BASE_CUP_ROTATION);
     }

@@ -8,31 +8,35 @@
   },
   "project": {
     "name": "Tugas VAR",
-    "currentFocus": "WebAR AR Coffee Menu cup object readability on the Hiro marker",
+    "currentFocus": "WebAR AR Coffee Menu GLB coffee cup model on the Hiro marker",
     "durableFacts": [
       "The project is a static HTML/CSS/JavaScript WebAR demo using A-Frame and AR.js from ar.html.",
       "AR scene geometry is owned by ar.html; menu state, rotation, marker status, and HUD interactions are owned by script.js.",
-      "The coffee cup object should remain small, marker-anchored, and readable as a cup rather than a flat brown circle."
+      "The coffee cup object should remain small, marker-anchored, and readable as a cup rather than a flat brown circle.",
+      "The realistic coffee cup model is expected at assets/models/coffee_cup.glb and is loaded through a-assets in ar.html."
     ]
   },
   "progress": {
     "lastAchievements": [
       "Added minimal project and design docs required by the local governance hard gate.",
       "Reworked the AR coffee object into a small tapered cup with rim, dark surface, handle, saucer, and subtle steam.",
-      "Kept Rotate, Next, and Info wiring in script.js while preserving the side-view cup tilt."
+      "Kept Rotate, Next, and Info wiring in script.js while preserving the side-view cup tilt.",
+      "Replaced the primitive AR cup with an a-gltf-model that references assets/models/coffee_cup.glb."
     ],
     "pendingIssues": [
-      "Manual camera validation with the Hiro marker is still required on a browser/device."
+      "Manual camera validation with the Hiro marker is still required on a browser/device.",
+      "Final GLB visual size and orientation may need minor adjustment if the model's internal units or origin are unusual."
     ],
     "nextBestActions": [
-      "Open http://127.0.0.1:5500/ar.html from the local static server or deploy over HTTPS and scan the Hiro marker.",
-      "Verify that Next keeps all menu variants around scale 0.45 and that Rotate spins without losing the -15 degree tilt."
+      "Open ar.html from the local static server or deploy over HTTPS and scan the Hiro marker.",
+      "Verify that Next keeps the model at scale 0.35 and that Rotate spins without losing the -15 degree tilt."
     ],
     "validationState": [
       "node --check script.js passed.",
       "docs/design-intent.json parsed successfully.",
       "git diff --check passed with only existing CRLF normalization warnings.",
-      "Local static server responded 200 for /ar.html on port 5500."
+      "Local static server responded 200 for /ar.html on port 5500.",
+      "assets/models/coffee_cup.glb exists in the workspace."
     ]
   },
   "designContinuity": {
@@ -50,5 +54,5 @@
     "redactSensitiveTextBeforeWriting": true
   },
   "generatedAt": "2026-04-28T08:28:12.042Z",
-  "lastUpdatedAt": "2026-04-28T16:48:32.2214427+07:00"
+  "lastUpdatedAt": "2026-04-28T17:06:39.0561112+07:00"
 }

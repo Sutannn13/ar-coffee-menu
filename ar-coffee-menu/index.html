@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AR Coffee Menu — Visualisasi Menu Kopi 3D</title>
+  <meta name="description" content="Aplikasi WebAR untuk memvisualisasikan menu kopi dalam bentuk objek 3D menggunakan A-Frame dan AR.js. Arahkan kamera ke marker untuk melihat menu kopi secara interaktif." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>" />
+</head>
+<body>
+
+  <!-- Ambient Background -->
+  <div class="ambient-bg"></div>
+
+  <!-- Landing Container -->
+  <main class="landing-container" id="landing-page">
+
+    <!-- Brand Badge -->
+    <div class="brand-badge">
+      <span class="badge-icon">☕</span>
+      <span>WebAR Experience</span>
+    </div>
+
+    <!-- Coffee Cup Illustration -->
+    <div class="coffee-illustration" aria-hidden="true">
+      <div class="cup-steam">
+        <div class="steam-line"></div>
+        <div class="steam-line"></div>
+        <div class="steam-line"></div>
+      </div>
+      <div class="cup-body"></div>
+      <div class="cup-handle"></div>
+      <div class="cup-saucer"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <h1 class="hero-title">AR Coffee Menu</h1>
+      <p class="hero-subtitle">
+        Lihat menu kopi favorit dalam bentuk 3D langsung dari kameramu.
+        Arahkan kamera ke marker Hiro untuk memulai pengalaman Augmented Reality.
+      </p>
+
+      <!-- Start AR Button -->
+      <a href="ar.html" class="btn-primary" id="btn-start-ar">
+        <span>Mulai AR</span>
+        <span class="btn-icon">→</span>
+      </a>
+    </section>
+
+    <!-- Feature Cards -->
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="card-icon">📱</div>
+        <div class="card-title">Browser Only</div>
+        <div class="card-desc">Tanpa install APK, langsung dari browser HP</div>
+      </div>
+      <div class="feature-card">
+        <div class="card-icon">🎯</div>
+        <div class="card-title">Marker AR</div>
+        <div class="card-desc">Gunakan marker Hiro untuk tracking objek 3D</div>
+      </div>
+      <div class="feature-card">
+        <div class="card-icon">🔄</div>
+        <div class="card-title">Interaktif</div>
+        <div class="card-desc">Putar objek, ganti menu, dan lihat detail</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="landing-footer">
+      <p>Tugas Mata Kuliah <span>Virtual & Augmented Reality</span></p>
+    </footer>
+
+  </main>
+
+</body>
+</html>

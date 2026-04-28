@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>AR Coffee Menu — Mode AR</title>
+  <meta name="description" content="Mode Augmented Reality: arahkan kamera ke marker Hiro untuk melihat menu kopi 3D secara real-time." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>" />
+
+  <!-- A-Frame & AR.js -->
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+  <style>
+    /* Override A-Frame default styles */
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+    }
+
+    /* Hide A-Frame VR button — not needed for AR */
+    .a-enter-vr-button,
+    .a-enter-ar-button {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Memuat kamera AR...</p>
+  </div>
+
+  <!-- Top Bar -->
+  <div class="ar-top-bar" id="ar-top-bar">
+    <div class="ar-title">☕ AR Coffee Menu</div>
+    <div class="ar-marker-status">
+      <div class="status-dot" id="status-dot"></div>
+      <span id="status-text">Cari Marker...</span>
+    </div>
+  </div>
+
+  <!-- Marker Hint -->
+  <div class="marker-hint" id="marker-hint">
+    <div class="hint-icon">📷</div>
+    <div class="hint-text">Arahkan kamera ke marker Hiro</div>
+  </div>
+
+  <!-- ==================== A-Frame AR Scene ==================== -->
+  <a-scene
+    embedded
+    arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+    renderer="logarithmicDepthBuffer: true; antialias: true;"
+    vr-mode-ui="enabled: false"
+    loading-screen="enabled: false"
+    id="ar-scene"
+  >
+    <!-- Marker: menggunakan Hiro preset -->
+    <a-marker preset="hiro" id="ar-marker">
+
+      <!-- Group untuk seluruh objek kopi (bisa dirotasi bersama) -->
+      <a-entity id="cup-group" position="0 0.6 0" scale="1 1 1">
+
+        <!-- ===== OBJEK 3D GELAS KOPI (Primitives) ===== -->
+
+        <!-- Badan gelas (cylinder) -->
+        <a-cylinder
+          id="cup-body-3d"
+          position="0 0.35 0"
+          radius-bottom="0.35"
+          radius-top="0.4"
+          height="0.7"
+          color="#3e2723"
+          segments-radial="32"
+          shadow
+        ></a-cylinder>
+
+        <!-- Tutup/foam gelas (cylinder tipis di atas) -->
+        <a-cylinder
+          id="cup-lid-3d"
+          position="0 0.72 0"
+          radius-bottom="0.4"
+          radius-top="0.38"
+          height="0.06"
+          color="#5d4037"
+          segments-radial="32"
+        ></a-cylinder>
+
+        <!-- Handle gelas (torus setengah) -->
+        <a-torus
+          position="0.48 0.35 0"
+          rotation="0 0 90"
+          radius="0.15"
+          radius-tubular="0.025"
+          arc="180"
+          color="#5d4037"
+          segments-radial="16"
+          segments-tubular="32"
+        ></a-torus>
+
+        <!-- Piring/saucer (cylinder pipih) -->
+        <a-cylinder
+          position="0 -0.02 0"
+          radius="0.55"
+          height="0.04"
+          color="#8d6e63"
+          segments-radial="32"
+        ></a-cylinder>
+
+        <!-- ===== STEAM EFFECT (3 partikel tipis) ===== -->
+        <a-entity position="0 0.85 0">
+          <!-- Steam 1 -->
+          <a-cylinder
+            position="-0.08 0.15 0"
+            radius="0.015"
+            height="0.25"
+            color="#ffffff"
+            opacity="0.3"
+            animation="property: position; to: -0.08 0.35 0; dur: 2000; easing: easeInOutSine; loop: true; dir: alternate"
+            animation__opacity="property: opacity; from: 0.3; to: 0; dur: 2000; loop: true; dir: alternate"
+          ></a-cylinder>
+          <!-- Steam 2 -->
+          <a-cylinder
+            position="0.05 0.1 0.05"
+            radius="0.012"
+            height="0.2"
+            color="#ffffff"
+            opacity="0.25"
+            animation="property: position; to: 0.05 0.3 0.05; dur: 2400; easing: easeInOutSine; loop: true; dir: alternate"
+            animation__opacity="property: opacity; from: 0.25; to: 0; dur: 2400; loop: true; dir: alternate"
+          ></a-cylinder>
+          <!-- Steam 3 -->
+          <a-cylinder
+            position="0.1 0.12 -0.04"
+            radius="0.01"
+            height="0.18"
+            color="#ffffff"
+            opacity="0.2"
+            animation="property: position; to: 0.1 0.28 -0.04; dur: 2800; easing: easeInOutSine; loop: true; dir: alternate"
+            animation__opacity="property: opacity; from: 0.2; to: 0; dur: 2800; loop: true; dir: alternate"
+          ></a-cylinder>
+        </a-entity>
+
+        <!-- ===== LABEL TEKS ===== -->
+        <!-- Nama menu (melayang di atas gelas) -->
+        <a-text
+          id="label-name"
+          value="Espresso"
+          position="0 1.3 0"
+          align="center"
+          color="#ffffff"
+          width="3"
+          font="mozillavr"
+          anchor="center"
+          baseline="center"
+        ></a-text>
+
+        <!-- Harga (di bawah nama) -->
+        <a-text
+          id="label-price"
+          value="Rp 25.000"
+          position="0 1.1 0"
+          align="center"
+          color="#ffcc80"
+          width="2.2"
+          font="mozillavr"
+          anchor="center"
+          baseline="center"
+        ></a-text>
+
+      </a-entity>
+
+    </a-marker>
+
+    <!-- Camera entity untuk AR.js -->
+    <a-entity camera></a-entity>
+
+  </a-scene>
+
+  <!-- ==================== HUD Overlay ==================== -->
+  <div class="ar-hud" id="ar-hud">
+    <!-- Menu Info Card -->
+    <div class="menu-card" id="menu-card">
+      <div class="menu-name" id="menu-name">Espresso</div>
+      <div class="menu-price" id="menu-price">Rp 25.000</div>
+      <div class="menu-desc" id="menu-desc">Kopi hitam pekat dengan crema tebal, diseduh dengan tekanan tinggi. Rasa bold dan intens.</div>
+      <div class="menu-badge" id="menu-badge">Classic</div>
+    </div>
+
+    <!-- Control Buttons -->
+    <div class="ar-controls" id="ar-controls">
+      <button class="ar-btn ar-btn-rotate" id="btn-rotate" aria-label="Putar objek 3D">
+        <span class="btn-emoji">🔄</span>
+        <span class="btn-label">Rotate</span>
+      </button>
+      <button class="ar-btn ar-btn-next" id="btn-next" aria-label="Menu berikutnya">
+        <span class="btn-emoji">➡️</span>
+        <span class="btn-label">Next</span>
+      </button>
+      <button class="ar-btn ar-btn-info" id="btn-info" aria-label="Tampilkan atau sembunyikan info menu">
+        <span class="btn-emoji">ℹ️</span>
+        <span class="btn-label">Info</span>
+      </button>
+      <a href="index.html" class="ar-btn ar-btn-back" aria-label="Kembali ke halaman utama">
+        <span class="btn-emoji">←</span>
+        <span class="btn-label">Back</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Script -->
+  <script src="script.js"></script>
+
+  <!-- Hide loading after scene loaded -->
+  <script>
+    const scene = document.getElementById("ar-scene");
+    const loadingOverlay = document.getElementById("loading-overlay");
+
+    if (scene) {
+      scene.addEventListener("loaded", () => {
+        setTimeout(() => {
+          if (loadingOverlay) {
+            loadingOverlay.classList.add("fade-out");
+            setTimeout(() => {
+              loadingOverlay.style.display = "none";
+            }, 600);
+          }
+        }, 1500);
+      });
+    }
+
+    // Fallback: hide loading after 5s regardless
+    setTimeout(() => {
+      if (loadingOverlay && !loadingOverlay.classList.contains("fade-out")) {
+        loadingOverlay.classList.add("fade-out");
+        setTimeout(() => {
+          loadingOverlay.style.display = "none";
+        }, 600);
+      }
+    }, 5000);
+  </script>
+
+</body>
+</html>

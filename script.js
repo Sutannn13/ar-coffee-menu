@@ -12,9 +12,9 @@ const coffeeMenus = [
     price: "Rp 25.000",
     description: "Kopi hitam pekat dengan crema tebal, diseduh dengan tekanan tinggi. Rasa bold dan intens.",
     category: "Classic",
-    color: "#3e2723",       // warna gelap kopi
-    lidColor: "#5d4037",
-    cupScale: "1 1 1",
+    color: "#6d4c41",
+    lidColor: "#24120d",
+    cupScale: "0.45 0.45 0.45",
   },
   {
     id: 2,
@@ -22,9 +22,9 @@ const coffeeMenus = [
     price: "Rp 32.000",
     description: "Perpaduan espresso, steamed milk, dan foam susu yang lembut. Cocok untuk pecinta kopi creamy.",
     category: "Milk Based",
-    color: "#795548",
-    lidColor: "#efebe9",
-    cupScale: "1.1 1.1 1.1",
+    color: "#8d6e63",
+    lidColor: "#3b2118",
+    cupScale: "0.46 0.46 0.46",
   },
   {
     id: 3,
@@ -32,9 +32,9 @@ const coffeeMenus = [
     price: "Rp 38.000",
     description: "Latte manis dengan sirup karamel premium dan art foam. Minuman favorit sepanjang masa.",
     category: "Signature",
-    color: "#a1887f",
-    lidColor: "#d7ccc8",
-    cupScale: "1.15 1.2 1.15",
+    color: "#a16a43",
+    lidColor: "#4a2617",
+    cupScale: "0.46 0.47 0.46",
   },
   {
     id: 4,
@@ -42,9 +42,9 @@ const coffeeMenus = [
     price: "Rp 35.000",
     description: "Teh hijau matcha Jepang premium dicampur susu segar. Segar, creamy, dan kaya antioksidan.",
     category: "Non-Coffee",
-    color: "#558b2f",
-    lidColor: "#c5e1a5",
-    cupScale: "1.1 1.15 1.1",
+    color: "#6f8f45",
+    lidColor: "#2f3b1e",
+    cupScale: "0.46 0.47 0.46",
   },
   {
     id: 5,
@@ -52,9 +52,9 @@ const coffeeMenus = [
     price: "Rp 30.000",
     description: "Kopi yang diseduh dingin selama 18 jam. Rasa smooth, rendah asam, dan menyegarkan.",
     category: "Iced",
-    color: "#4e342e",
-    lidColor: "#8d6e63",
-    cupScale: "1 1.3 1",
+    color: "#5d4037",
+    lidColor: "#1d100c",
+    cupScale: "0.45 0.48 0.45",
   },
 ];
 
@@ -63,6 +63,10 @@ let currentMenuIndex = 0;
 let isRotating = false;
 let isInfoVisible = true;
 let markerVisible = false;
+
+const BASE_CUP_POSITION = "0 0.25 0";
+const BASE_CUP_ROTATION = "-15 0 0";
+const SPIN_CUP_ROTATION = "-15 360 0";
 
 // ---------- DOM Elements ----------
 const menuCard = document.getElementById("menu-card");
@@ -99,22 +103,26 @@ function updateMenuDisplay() {
 
 // ---------- Update Model 3D Kopi ----------
 function updateCoffeeModel(menu) {
-  const cupBody = document.getElementById("cup-body-3d");
+  const cupBodyParts = document.querySelectorAll("[data-cup-color='body']");
   const cupLid = document.getElementById("cup-lid-3d");
   const cupGroup = document.getElementById("cup-group");
   const labelName = document.getElementById("label-name");
   const labelPrice = document.getElementById("label-price");
 
-  if (cupBody) {
-    cupBody.setAttribute("color", menu.color);
-  }
+  cupBodyParts.forEach((part) => {
+    part.setAttribute("color", menu.color);
+  });
 
   if (cupLid) {
     cupLid.setAttribute("color", menu.lidColor);
   }
 
   if (cupGroup) {
+    cupGroup.setAttribute("position", BASE_CUP_POSITION);
     cupGroup.setAttribute("scale", menu.cupScale);
+    if (!isRotating) {
+      cupGroup.setAttribute("rotation", BASE_CUP_ROTATION);
+    }
   }
 
   if (labelName) {
@@ -179,15 +187,18 @@ function toggleRotation() {
   const cupGroup = document.getElementById("cup-group");
   if (cupGroup) {
     if (isRotating) {
-      cupGroup.setAttribute("animation", {
+      cupGroup.setAttribute("rotation", BASE_CUP_ROTATION);
+      cupGroup.setAttribute("animation__spin", {
         property: "rotation",
-        to: "0 360 0",
+        from: BASE_CUP_ROTATION,
+        to: SPIN_CUP_ROTATION,
         loop: true,
         dur: 4000,
         easing: "linear",
       });
     } else {
-      cupGroup.removeAttribute("animation");
+      cupGroup.removeAttribute("animation__spin");
+      cupGroup.setAttribute("rotation", BASE_CUP_ROTATION);
     }
   }
 

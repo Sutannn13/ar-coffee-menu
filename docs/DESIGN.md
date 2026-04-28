@@ -10,7 +10,7 @@ Users are likely testing from a phone, with one hand holding the camera and the 
 
 ## Visual Direction and Distinctive Moves
 
-The current design anchor is a hand-thrown ceramic demitasse on a cafe saucer. The cup silhouette should be readable from a shallow side angle: tapered body, visible rim, dark coffee surface, side handle, low saucer, and faint steam.
+The current design anchor is a hand-thrown ceramic demitasse on a cafe saucer. The GLB cup silhouette should stay readable from a shallow side angle, with the manual liquid surface, highlight, and faint steam making the drink feel filled rather than empty.
 
 ## Color Science and Semantic Roles
 
@@ -40,7 +40,7 @@ Motion should clarify spatial presence. Rotation spins around the marker while p
 
 ## Component Language and Morphology
 
-The AR cup is built from simple primitives: tapered cylinder body, torus rim, thin coffee surface, torus handle, saucer cylinder, and translucent steam arcs. HUD controls preserve their existing button morphology and states.
+The AR cup uses `assets/models/coffee_cup.glb` for the realistic vessel, then adds small A-Frame primitives for the drink surface, liquid highlight, and translucent steam arcs. HUD controls preserve their existing button morphology and states.
 
 ## Context Hygiene and Source Boundaries
 
@@ -56,8 +56,8 @@ Controls need visible text labels and existing `aria-label` attributes. The UI m
 - Flat top disk that reads as a brown circle.
 - Rotation that removes the intentional side-view tilt.
 - Decorative steam or labels that obscure cup recognition.
-- New dependency or asset pipeline for a primitive-only fix.
+- Scaling the GLB per menu until it no longer stays anchored above the marker.
 
 ## Implementation Notes for Future UI Tasks
 
-If higher realism is required later, add a lightweight `.glb` cup model under `assets/models/` and document the asset source. For the current scope, A-Frame primitives are sufficient and easier to validate in a static classroom demo.
+Keep the GLB model lightweight and local under `assets/models/`. Use small A-Frame overlay primitives only for menu-specific drink state, such as liquid color, highlight, and steam.

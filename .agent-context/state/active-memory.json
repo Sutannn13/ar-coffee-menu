@@ -21,15 +21,17 @@
       "Added minimal project and design docs required by the local governance hard gate.",
       "Reworked the AR coffee object into a small tapered cup with rim, dark surface, handle, saucer, and subtle steam.",
       "Kept Rotate, Next, and Info wiring in script.js while preserving the side-view cup tilt.",
-      "Replaced the primitive AR cup with an a-gltf-model that references assets/models/coffee_cup.glb."
+      "Replaced the primitive AR cup with an a-gltf-model that references assets/models/coffee_cup.glb.",
+      "Added manual liquid, highlight, and steam overlays above the GLB cup, with menu-specific liquid colors.",
+      "Changed the Info card hidden state so it collapses instead of leaving a transparent layout gap."
     ],
     "pendingIssues": [
       "Manual camera validation with the Hiro marker is still required on a browser/device.",
-      "Final GLB visual size and orientation may need minor adjustment if the model's internal units or origin are unusual."
+      "Final GLB liquid position, radius, and steam height may need minor adjustment if the model's internal cup opening is unusual."
     ],
     "nextBestActions": [
       "Open ar.html from the local static server or deploy over HTTPS and scan the Hiro marker.",
-      "Verify that Next keeps the model at scale 0.35 and that Rotate spins without losing the -15 degree tilt."
+      "Verify that Next keeps the model at scale 0.35, updates the liquid color, and that Rotate spins without losing the -15 degree tilt."
     ],
     "validationState": [
       "node --check script.js passed.",
@@ -54,5 +56,5 @@
     "redactSensitiveTextBeforeWriting": true
   },
   "generatedAt": "2026-04-28T08:28:12.042Z",
-  "lastUpdatedAt": "2026-04-28T17:06:39.0561112+07:00"
+  "lastUpdatedAt": "2026-04-28T17:19:13.2098757+07:00"
 }

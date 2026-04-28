@@ -16,21 +16,21 @@
 - `ar.html` defines the marker, 3D object group, text labels, camera entity, HUD, and controls.
 - `script.js` initializes after `DOMContentLoaded`.
 - `updateMenuDisplay()` syncs HUD text and 3D labels.
-- `updateCoffeeModel()` applies menu-specific colors and cup transform values.
+- `updateCoffeeModel()` applies menu-specific text, the fixed cup transform, and drink liquid color.
 - `setupMarkerEvents()` updates the marker status UI.
 - `setupButtonEvents()` wires Rotate, Next, and Info buttons.
 
 ## AR Object Contract
 
 - The 3D cup should stay visually centered above the Hiro marker.
-- The group scale should stay small, around `0.45 0.45 0.45`.
-- The cup should use a slight tilt so the side silhouette, rim, coffee surface, handle, saucer, and steam are visible.
-- Menu switching may change colors and labels but must not inflate the object back to the previous large scale.
+- The group scale should stay small, currently `0.35 0.35 0.35`.
+- The cup should use a slight tilt so the GLB vessel, coffee surface, highlight, and steam are visible.
+- Menu switching may change liquid colors and labels but must not inflate the object back to a large scale.
 
 ## Manual Test Matrix
 
 - Marker not visible: status says searching and marker hint is visible.
 - Marker visible: status says detected and marker hint is hidden.
 - Rotate button: cup spins while preserving side-view tilt.
-- Next button: HUD text and 3D labels update; object remains small.
-- Info button: info card toggles without affecting the AR object.
+- Next button: HUD text, 3D labels, and drink liquid color update; object remains small.
+- Info button: info card toggles without leaving a blank HUD layout gap or affecting the AR object.

@@ -72,6 +72,63 @@
         <!-- ===== MODEL 3D GELAS KOPI (GLB) ===== -->
         <a-gltf-model id="coffee-model" src="#coffee-cup-model"></a-gltf-model>
 
+        <!-- ===== ISI MINUMAN DI ATAS MODEL GLB ===== -->
+        <a-cylinder
+          id="coffee-liquid"
+          position="0 0.62 0"
+          radius="0.62"
+          height="0.025"
+          color="#2b130d"
+          segments-radial="64"
+          material="roughness: 0.45; metalness: 0; opacity: 0.95"
+        ></a-cylinder>
+
+        <a-circle
+          id="coffee-highlight"
+          position="-0.18 0.636 0.16"
+          rotation="-90 0 0"
+          radius="0.13"
+          color="#f7d7ad"
+          material="transparent: true; opacity: 0.28; side: double"
+        ></a-circle>
+
+        <!-- ===== STEAM EFFECT DI ATAS KOPI ===== -->
+        <a-entity id="steam-group" position="0 0.78 0">
+          <a-torus
+            position="-0.16 0.08 0.02"
+            rotation="0 0 18"
+            radius="0.09"
+            radius-tubular="0.007"
+            arc="95"
+            color="#ffffff"
+            material="transparent: true; opacity: 0.28"
+            animation="property: position; to: -0.16 0.26 0.02; dur: 2200; easing: easeInOutSine; loop: true; dir: alternate"
+            animation__opacity="property: material.opacity; from: 0.28; to: 0.04; dur: 2200; loop: true; dir: alternate"
+          ></a-torus>
+          <a-torus
+            position="0.02 0.06 -0.02"
+            rotation="0 0 -14"
+            radius="0.08"
+            radius-tubular="0.006"
+            arc="105"
+            color="#ffffff"
+            material="transparent: true; opacity: 0.24"
+            animation="property: position; to: 0.02 0.25 -0.02; dur: 2600; easing: easeInOutSine; loop: true; dir: alternate"
+            animation__opacity="property: material.opacity; from: 0.24; to: 0.035; dur: 2600; loop: true; dir: alternate"
+          ></a-torus>
+          <a-torus
+            position="0.16 0.09 0.03"
+            rotation="0 0 22"
+            radius="0.07"
+            radius-tubular="0.006"
+            arc="90"
+            color="#ffffff"
+            material="transparent: true; opacity: 0.2"
+            animation="property: position; to: 0.16 0.27 0.03; dur: 3000; easing: easeInOutSine; loop: true; dir: alternate"
+            animation__opacity="property: material.opacity; from: 0.2; to: 0.03; dur: 3000; loop: true; dir: alternate"
+          ></a-torus>
+        </a-entity>
+
         <!-- ===== LABEL TEKS ===== -->
         <!-- Nama menu (melayang di atas gelas) -->
         <a-text

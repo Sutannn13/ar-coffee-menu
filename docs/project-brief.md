@@ -14,7 +14,7 @@ Tugas VAR is a static WebAR coffee menu demo. Users open the landing page, enter
 
 ## Current Feature Scope
 
-The current task is a narrow WebAR visual fix: make the marker object read as a small coffee cup instead of a large brown circle while preserving Rotate, Next, and Info controls.
+The current task is a narrow WebAR visual fix: keep the GLB coffee cup small on the marker, add visible drink liquid, highlight, and steam, and preserve Rotate, Next, Info, and Back controls.
 
 ## Users and Context
 

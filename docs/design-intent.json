@@ -21,7 +21,7 @@
     "selectionAuthority": "agent-llm-after-current-context-repo-evidence-and-live-official-docs",
     "trendStance": "current-context-first-not-offline-preset-first",
     "distinctiveMoves": [
-      "Use a tapered demitasse silhouette with a visible rim, dark coffee surface, side handle, saucer, and faint steam so the marker object is immediately recognizable as a coffee cup."
+      "Use the GLB demitasse model with a visible manual liquid surface, subtle highlight, and faint steam so the marker object reads as a filled coffee cup."
     ],
     "copiedReferenceAllowed": false
   },
@@ -163,7 +163,7 @@
     "requiredProductSpecificSignals": [
       "small marker-anchored coffee cup scale",
       "rotation keeps the side-view tilt",
-      "tapered cup body with rim, coffee surface, handle, saucer, and steam"
+      "GLB cup model with manual coffee surface, highlight, and steam"
     ],
     "paletteExplorationRule": "Use a visually exploratory product-derived palette while preserving WCAG contrast and status clarity; do not use readability as an excuse for cream, slate, monochrome, or gradient defaults.",
     "backgroundPatternRule": "Lines, grids, scanlines, noise, glows, blobs, logos, and geometric decoration must serve a named product function such as alignment, measurement, navigation, crop guidance, timeline reading, status, or motion continuity.",
@@ -203,7 +203,7 @@
   "libraryDecisions": [
     {
       "library": "none-new",
-      "purpose": "The current fix uses existing A-Frame primitives and existing AR.js marker tracking from ar.html.",
+      "purpose": "The current fix uses the local GLB cup model plus small A-Frame overlay primitives for liquid, highlight, and steam.",
       "verifiedAt": null,
       "sourceUrl": null,
       "stableVersion": null,

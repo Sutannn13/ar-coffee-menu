@@ -14,6 +14,7 @@ const coffeeMenus = [
     category: "Classic",
     color: "#6d4c41",
     lidColor: "#24120d",
+    liquidColor: "#2b130d",
     cupScale: "0.35 0.35 0.35",
   },
   {
@@ -24,6 +25,7 @@ const coffeeMenus = [
     category: "Milk Based",
     color: "#8d6e63",
     lidColor: "#3b2118",
+    liquidColor: "#9a6a43",
     cupScale: "0.35 0.35 0.35",
   },
   {
@@ -34,6 +36,7 @@ const coffeeMenus = [
     category: "Signature",
     color: "#a16a43",
     lidColor: "#4a2617",
+    liquidColor: "#b87949",
     cupScale: "0.35 0.35 0.35",
   },
   {
@@ -44,6 +47,7 @@ const coffeeMenus = [
     category: "Non-Coffee",
     color: "#6f8f45",
     lidColor: "#2f3b1e",
+    liquidColor: "#6f8f45",
     cupScale: "0.35 0.35 0.35",
   },
   {
@@ -54,6 +58,7 @@ const coffeeMenus = [
     category: "Iced",
     color: "#5d4037",
     lidColor: "#1d100c",
+    liquidColor: "#24120d",
     cupScale: "0.35 0.35 0.35",
   },
 ];
@@ -105,6 +110,7 @@ function updateMenuDisplay() {
 // ---------- Update Model 3D Kopi ----------
 function updateCoffeeModel(menu) {
   const cupGroup = document.getElementById("cup-group");
+  const coffeeLiquid = document.getElementById("coffee-liquid");
   const labelName = document.getElementById("label-name");
   const labelPrice = document.getElementById("label-price");
 
@@ -114,6 +120,10 @@ function updateCoffeeModel(menu) {
     if (!isRotating) {
       cupGroup.setAttribute("rotation", BASE_CUP_ROTATION);
     }
+  }
+
+  if (coffeeLiquid) {
+    coffeeLiquid.setAttribute("color", menu.liquidColor);
   }
 
   if (labelName) {

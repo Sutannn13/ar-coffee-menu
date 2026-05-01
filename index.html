@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AR Coffee Menu — Visualisasi Menu Kopi 3D</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>AR Coffee Experience — Visualisasi Menu Kopi 3D</title>
   <meta name="description" content="Aplikasi WebAR untuk memvisualisasikan menu kopi dalam bentuk objek 3D menggunakan A-Frame dan AR.js. Arahkan kamera ke marker untuk melihat menu kopi secara interaktif." />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>" />
@@ -11,69 +11,270 @@
 <body>
 
   <!-- Ambient Background -->
-  <div class="ambient-bg"></div>
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-orb ambient-orb--1"></div>
+    <div class="ambient-orb ambient-orb--2"></div>
+    <div class="ambient-orb ambient-orb--3"></div>
+  </div>
+
+  <!-- Floating Particles -->
+  <div class="particles" id="particles" aria-hidden="true"></div>
 
   <!-- Landing Container -->
   <main class="landing-container" id="landing-page">
 
-    <!-- Brand Badge -->
-    <div class="brand-badge">
-      <span class="badge-icon">☕</span>
-      <span>WebAR Experience</span>
-    </div>
-
-    <!-- Coffee Cup Illustration -->
-    <div class="coffee-illustration" aria-hidden="true">
-      <div class="cup-steam">
-        <div class="steam-line"></div>
-        <div class="steam-line"></div>
-        <div class="steam-line"></div>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar" id="nav-bar">
+      <div class="nav-brand">
+        <span class="nav-icon">☕</span>
+        <span class="nav-name">AR Coffee</span>
       </div>
-      <div class="cup-body"></div>
-      <div class="cup-handle"></div>
-      <div class="cup-saucer"></div>
-    </div>
+      <div class="nav-links">
+        <a href="#features" class="nav-link">Fitur</a>
+        <a href="#how-to" class="nav-link">Panduan</a>
+        <a href="#about" class="nav-link">Tentang</a>
+      </div>
+    </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section">
-      <h1 class="hero-title">AR Coffee Menu</h1>
+    <section class="hero-section" id="hero">
+      <!-- Brand Badge -->
+      <div class="brand-badge">
+        <span class="badge-dot"></span>
+        <span>WebAR Experience</span>
+      </div>
+
+      <!-- Coffee Illustration -->
+      <div class="coffee-illustration" aria-hidden="true">
+        <div class="cup-steam">
+          <div class="steam-line"></div>
+          <div class="steam-line"></div>
+          <div class="steam-line"></div>
+        </div>
+        <div class="cup-body">
+          <div class="cup-liquid"></div>
+        </div>
+        <div class="cup-handle"></div>
+        <div class="cup-saucer"></div>
+        <div class="cup-shadow"></div>
+      </div>
+
+      <h1 class="hero-title">AR Coffee<br/><span class="hero-title-accent">Experience</span></h1>
       <p class="hero-subtitle">
-        Lihat menu kopi favorit dalam bentuk 3D langsung dari kameramu.
-        Arahkan kamera ke marker Hiro untuk memulai pengalaman Augmented Reality.
+        Jelajahi tampilan cangkir kopi 3D melalui teknologi Augmented Reality.
+        Cukup arahkan kamera ke marker Hiro untuk memulai pengalaman interaktif.
       </p>
 
-      <!-- Start AR Button -->
-      <a href="ar.html" class="btn-primary" id="btn-start-ar">
-        <span>Mulai AR</span>
-        <span class="btn-icon">→</span>
-      </a>
+      <!-- CTA Buttons -->
+      <div class="hero-actions">
+        <a href="ar.html" class="btn-primary" id="btn-start-ar">
+          <span class="btn-pulse"></span>
+          <span class="btn-text">Mulai AR</span>
+          <span class="btn-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+        <a href="#how-to" class="btn-secondary" id="btn-marker-guide">
+          <span class="btn-text">Panduan Marker</span>
+          <span class="btn-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          </span>
+        </a>
+      </div>
     </section>
 
     <!-- Feature Cards -->
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="card-icon">📱</div>
-        <div class="card-title">Browser Only</div>
-        <div class="card-desc">Tanpa install APK, langsung dari browser HP</div>
+    <section class="features-section" id="features">
+      <div class="section-header">
+        <span class="section-tag">Fitur Utama</span>
+        <h2 class="section-title">Teknologi AR di Ujung Jari</h2>
       </div>
-      <div class="feature-card">
-        <div class="card-icon">🎯</div>
-        <div class="card-title">Marker AR</div>
-        <div class="card-desc">Gunakan marker Hiro untuk tracking objek 3D</div>
+      <div class="features-grid">
+        <div class="feature-card" id="feature-scan">
+          <div class="card-icon-wrap">
+            <svg class="card-svg-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2H2v5"/><path d="M17 2h5v5"/><path d="M7 22H2v-5"/><path d="M17 22h5v-5"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
+          </div>
+          <div class="card-title">Scan Marker</div>
+          <div class="card-desc">Deteksi marker Hiro secara otomatis menggunakan kamera perangkat</div>
+        </div>
+        <div class="feature-card" id="feature-3d">
+          <div class="card-icon-wrap">
+            <svg class="card-svg-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="card-title">Coffee Cup 3D</div>
+          <div class="card-desc">Lihat model 3D cangkir kopi dengan detail realistis di atas marker</div>
+        </div>
+        <div class="feature-card" id="feature-interactive">
+          <div class="card-icon-wrap">
+            <svg class="card-svg-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v5z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg>
+          </div>
+          <div class="card-title">Interaktif</div>
+          <div class="card-desc">Putar objek, ganti menu, dan lihat informasi detail setiap kopi</div>
+        </div>
+        <div class="feature-card" id="feature-web">
+          <div class="card-icon-wrap">
+            <svg class="card-svg-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div class="card-title">Berbasis Web</div>
+          <div class="card-desc">Tanpa install aplikasi, langsung berjalan di browser smartphone</div>
+        </div>
       </div>
-      <div class="feature-card">
-        <div class="card-icon">🔄</div>
-        <div class="card-title">Interaktif</div>
-        <div class="card-desc">Putar objek, ganti menu, dan lihat detail</div>
+    </section>
+
+    <!-- How To Use Section -->
+    <section class="howto-section" id="how-to">
+      <div class="section-header">
+        <span class="section-tag">Panduan</span>
+        <h2 class="section-title">Cara Menggunakan</h2>
       </div>
-    </div>
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <div class="step-title">Siapkan Marker Hiro</div>
+            <div class="step-desc">Cetak atau tampilkan marker Hiro di layar perangkat lain. <a href="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png" target="_blank" rel="noopener" class="step-link">Download Marker →</a></div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <div class="step-title">Klik Mulai AR</div>
+            <div class="step-desc">Tekan tombol "Mulai AR" di halaman utama untuk membuka mode kamera Augmented Reality.</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <div class="step-title">Izinkan Kamera</div>
+            <div class="step-desc">Browser akan meminta izin akses kamera. Tekan "Izinkan" untuk melanjutkan.</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <div class="step-title">Arahkan ke Marker</div>
+            <div class="step-desc">Arahkan kamera perangkat ke marker Hiro dengan jarak 15–40 cm.</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">5</div>
+          <div class="step-content">
+            <div class="step-title">Nikmati Coffee Cup 3D</div>
+            <div class="step-desc">Model 3D cangkir kopi akan muncul. Gunakan tombol kontrol untuk berinteraksi.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Project Section -->
+    <section class="about-section" id="about">
+      <div class="section-header">
+        <span class="section-tag">Tentang Project</span>
+        <h2 class="section-title">WebAR Coffee Menu</h2>
+      </div>
+      <div class="about-content">
+        <div class="about-card">
+          <p class="about-text">
+            Project ini memanfaatkan teknologi <strong>Augmented Reality berbasis web</strong> untuk menampilkan
+            objek 3D cangkir kopi secara interaktif. Dibangun menggunakan <strong>A-Frame</strong> dan <strong>AR.js</strong>,
+            objek 3D ditampilkan melalui <strong>marker-based tracking</strong> menggunakan marker Hiro.
+          </p>
+          <p class="about-text">
+            Aplikasi ini cocok sebagai media demonstrasi pembelajaran mata kuliah
+            Virtual dan Augmented Reality. Seluruh pengalaman berjalan langsung di browser
+            tanpa memerlukan instalasi aplikasi tambahan.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-tag">HTML5</span>
+            <span class="tech-tag">CSS3</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">A-Frame</span>
+            <span class="tech-tag">AR.js</span>
+            <span class="tech-tag">WebGL</span>
+            <span class="tech-tag">GLB 3D Model</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="landing-footer">
-      <p>Tugas Mata Kuliah <span>Virtual & Augmented Reality</span></p>
+    <footer class="landing-footer" id="footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="footer-icon">☕</span>
+          <span class="footer-name">AR Coffee Experience</span>
+        </div>
+        <div class="footer-info">
+          <p>Tugas Mata Kuliah <strong>Virtual & Augmented Reality</strong></p>
+          <p class="footer-tech">A-Frame · AR.js · JavaScript · WebGL</p>
+        </div>
+        <div class="footer-copy">
+          <p>&copy; 2025 AR Coffee Menu. Dibuat untuk keperluan akademik.</p>
+        </div>
+      </div>
     </footer>
 
   </main>
+
+  <!-- Landing Page Script -->
+  <script>
+    // Floating particles
+    (function createParticles() {
+      const container = document.getElementById('particles');
+      if (!container) return;
+      const count = 20;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() * 15 + 's';
+        p.style.animationDuration = (12 + Math.random() * 18) + 's';
+        p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
+        p.style.opacity = (0.15 + Math.random() * 0.25).toString();
+        container.appendChild(p);
+      }
+    })();
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener('click', function(e) {
+        var target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Intersection Observer for scroll animations
+    (function initScrollAnimations() {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.feature-card, .step-card, .about-card, .section-header').forEach(function(el) {
+        el.classList.add('scroll-reveal');
+        observer.observe(el);
+      });
+    })();
+
+    // Nav bar scroll effect
+    (function initNavScroll() {
+      var nav = document.getElementById('nav-bar');
+      if (!nav) return;
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 60) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      }, { passive: true });
+    })();
+  </script>
 
 </body>
 </html>

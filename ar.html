@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>AR Coffee Menu — Mode AR</title>
   <meta name="description" content="Mode Augmented Reality: arahkan kamera ke marker Hiro untuk melihat menu kopi 3D secara real-time." />
   <link rel="stylesheet" href="style.css" />
@@ -31,23 +31,61 @@
 
   <!-- Loading Overlay -->
   <div class="loading-overlay" id="loading-overlay">
-    <div class="loading-spinner"></div>
-    <p class="loading-text">Memuat kamera AR...</p>
+    <div class="loading-content">
+      <div class="loading-cup" aria-hidden="true">
+        <div class="loading-cup-steam">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="loading-cup-body"></div>
+        <div class="loading-cup-saucer"></div>
+      </div>
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Memuat kamera AR...</p>
+      <p class="loading-subtext">Izinkan akses kamera saat diminta</p>
+    </div>
+  </div>
+
+  <!-- Error Overlay -->
+  <div class="error-overlay" id="error-overlay">
+    <div class="error-content">
+      <div class="error-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+      </div>
+      <h2 class="error-title">Kamera Tidak Tersedia</h2>
+      <p class="error-text">Kamera tidak dapat dibuka. Pastikan browser mengizinkan akses kamera dan halaman dibuka melalui HTTPS.</p>
+      <div class="error-actions">
+        <button class="btn-error-retry" id="btn-retry" onclick="location.reload()">Coba Lagi</button>
+        <a href="index.html" class="btn-error-back">Kembali</a>
+      </div>
+    </div>
   </div>
 
   <!-- Top Bar -->
   <div class="ar-top-bar" id="ar-top-bar">
-    <div class="ar-title">☕ AR Coffee Menu</div>
-    <div class="ar-marker-status">
-      <div class="status-dot" id="status-dot"></div>
-      <span id="status-text">Cari Marker...</span>
+    <a href="index.html" class="ar-back-btn" id="btn-back-home" aria-label="Kembali ke halaman utama">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </a>
+    <div class="ar-title-group">
+      <div class="ar-title">☕ AR Coffee Cup</div>
+      <div class="ar-marker-status">
+        <div class="status-dot" id="status-dot"></div>
+        <span id="status-text">Cari Marker...</span>
+      </div>
     </div>
+    <button class="ar-menu-counter" id="menu-counter" aria-label="Menu saat ini">
+      <span id="counter-text">1/5</span>
+    </button>
   </div>
 
   <!-- Marker Hint -->
   <div class="marker-hint" id="marker-hint">
-    <div class="hint-icon">📷</div>
-    <div class="hint-text">Arahkan kamera ke marker Hiro</div>
+    <div class="hint-ring"></div>
+    <div class="hint-content">
+      <div class="hint-icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2H2v5"/><path d="M17 2h5v5"/><path d="M7 22H2v-5"/><path d="M17 22h5v-5"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <div class="hint-text">Arahkan kamera ke marker Hiro</div>
+    </div>
   </div>
 
   <!-- ==================== A-Frame AR Scene ==================== -->
@@ -169,63 +207,87 @@
   <div class="ar-hud" id="ar-hud">
     <!-- Menu Info Card -->
     <div class="menu-card" id="menu-card">
-      <div class="menu-name" id="menu-name">Espresso</div>
-      <div class="menu-price" id="menu-price">Rp 25.000</div>
+      <div class="menu-card-header">
+        <div>
+          <div class="menu-name" id="menu-name">Espresso</div>
+          <div class="menu-price" id="menu-price">Rp 25.000</div>
+        </div>
+        <div class="menu-badge" id="menu-badge">Classic</div>
+      </div>
       <div class="menu-desc" id="menu-desc">Kopi hitam pekat dengan crema tebal, diseduh dengan tekanan tinggi. Rasa bold dan intens.</div>
-      <div class="menu-badge" id="menu-badge">Classic</div>
+      <div class="menu-card-footer">
+        <div class="menu-tech-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          <span>A-Frame + AR.js · Marker-based</span>
+        </div>
+      </div>
     </div>
 
     <!-- Control Buttons -->
     <div class="ar-controls" id="ar-controls">
       <button class="ar-btn ar-btn-rotate" id="btn-rotate" aria-label="Putar objek 3D">
-        <span class="btn-emoji">🔄</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6"/><path d="M2.5 22v-6h6"/><path d="M22 11.5A10 10 0 0 0 6 4.3L2.5 8"/><path d="M2 12.5A10 10 0 0 0 18 19.7l3.5-3.7"/></svg>
         <span class="btn-label">Rotate</span>
       </button>
       <button class="ar-btn ar-btn-next" id="btn-next" aria-label="Menu berikutnya">
-        <span class="btn-emoji">➡️</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         <span class="btn-label">Next</span>
       </button>
+      <button class="ar-btn ar-btn-zoom-in" id="btn-zoom-in" aria-label="Perbesar objek">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+        <span class="btn-label">Zoom+</span>
+      </button>
+      <button class="ar-btn ar-btn-zoom-out" id="btn-zoom-out" aria-label="Perkecil objek">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M8 11h6"/></svg>
+        <span class="btn-label">Zoom-</span>
+      </button>
       <button class="ar-btn ar-btn-info" id="btn-info" aria-label="Tampilkan atau sembunyikan info menu">
-        <span class="btn-emoji">ℹ️</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
         <span class="btn-label">Info</span>
       </button>
-      <a href="index.html" class="ar-btn ar-btn-back" aria-label="Kembali ke halaman utama">
-        <span class="btn-emoji">←</span>
-        <span class="btn-label">Back</span>
-      </a>
     </div>
   </div>
 
   <!-- Main Script -->
   <script src="script.js"></script>
 
-  <!-- Hide loading after scene loaded -->
+  <!-- Scene load + error handling -->
   <script>
-    const scene = document.getElementById("ar-scene");
-    const loadingOverlay = document.getElementById("loading-overlay");
+    (function() {
+      var scene = document.getElementById("ar-scene");
+      var loadingOverlay = document.getElementById("loading-overlay");
+      var errorOverlay = document.getElementById("error-overlay");
 
-    if (scene) {
-      scene.addEventListener("loaded", () => {
-        setTimeout(() => {
-          if (loadingOverlay) {
-            loadingOverlay.classList.add("fade-out");
-            setTimeout(() => {
-              loadingOverlay.style.display = "none";
-            }, 600);
-          }
-        }, 1500);
-      });
-    }
-
-    // Fallback: hide loading after 5s regardless
-    setTimeout(() => {
-      if (loadingOverlay && !loadingOverlay.classList.contains("fade-out")) {
-        loadingOverlay.classList.add("fade-out");
-        setTimeout(() => {
-          loadingOverlay.style.display = "none";
-        }, 600);
+      function hideLoading() {
+        if (loadingOverlay && !loadingOverlay.classList.contains("fade-out")) {
+          loadingOverlay.classList.add("fade-out");
+          setTimeout(function() {
+            loadingOverlay.style.display = "none";
+          }, 600);
+        }
       }
-    }, 5000);
+
+      if (scene) {
+        scene.addEventListener("loaded", function() {
+          setTimeout(hideLoading, 1500);
+        });
+      }
+
+      // Fallback: hide loading after 6s regardless
+      setTimeout(hideLoading, 6000);
+
+      // Camera error detection
+      setTimeout(function() {
+        var video = document.querySelector("video");
+        if (!video || (video.readyState === 0 && video.srcObject === null)) {
+          // Only show error if no video is streaming after 8s
+          if (errorOverlay) {
+            hideLoading();
+            errorOverlay.classList.add("visible");
+          }
+        }
+      }, 8000);
+    })();
   </script>
 
 </body>

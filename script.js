@@ -23,9 +23,9 @@ var MIN_SCALE = 0.2;
 var MAX_SCALE = 0.6;
 var SCALE_STEP = 0.05;
 
-var BASE_CUP_POSITION = "0 0.15 0";
-var BASE_CUP_ROTATION = "-15 0 0";
-var SPIN_CUP_ROTATION = "-15 360 0";
+var BASE_CUP_POSITION = "0 0.1 0";
+var BASE_CUP_ROTATION = "0 0 0";
+var SPIN_CUP_ROTATION = "0 360 0";
 
 // ---------- DOM Elements ----------
 var menuCard = document.getElementById("menu-card");

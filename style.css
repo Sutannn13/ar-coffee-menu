@@ -227,11 +227,29 @@ button { font-family:inherit; cursor:pointer; border:none; outline:none; backgro
 @media (min-width:1025px) {
   .hero-section { padding-top:140px; }
   .landing-container { padding:0 2rem; }
-  .menu-card { max-width:480px; }
-  .ar-controls { max-width:480px; }
+  /* AR Desktop: constrain HUD to center */
+  .ar-hud { max-width:520px; left:50%; right:auto; transform:translateX(-50%); padding:0 1.2rem 1.2rem; }
+  .menu-card { max-width:520px; }
+  .ar-controls { max-width:520px; }
+  .ar-top-bar { padding:0.8rem 1.5rem; }
+  .ar-back-btn { width:40px; height:40px; }
+  .ar-title { font-size:1rem; }
+  .marker-hint .hint-text { font-size:0.9rem; padding:0.6rem 1.4rem; }
+  .hint-ring { width:140px; height:140px; }
 }
 @media (max-width:360px) {
   .hero-title { font-size:1.8rem; }
   .ar-btn { padding:0.55rem 0.6rem; }
   .step-card { padding:1rem; }
+}
+/* Landscape phone: compact AR UI */
+@media (max-height:480px) and (orientation:landscape) {
+  .ar-hud { flex-direction:row; align-items:flex-end; gap:0.5rem; padding-bottom:0.5rem; }
+  .menu-card { max-width:320px; padding:0.6rem 0.8rem; margin-bottom:0; }
+  .menu-desc { display:none; }
+  .menu-card-footer { display:none; }
+  .ar-controls { max-width:none; width:auto; flex-direction:column; gap:0.3rem; }
+  .ar-btn { padding:0.4rem 0.6rem; min-height:36px; }
+  .ar-btn .btn-label { display:none; }
+  .marker-hint { top:40%; }
 }

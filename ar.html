@@ -105,7 +105,7 @@
     <a-marker preset="hiro" id="ar-marker">
 
       <!-- Group untuk seluruh objek kopi (bisa dirotasi bersama) -->
-      <a-entity id="cup-group" position="0 0.15 0" rotation="-15 0 0" scale="0.35 0.35 0.35">
+      <a-entity id="cup-group" position="0 0.1 0" rotation="0 0 0" scale="0.35 0.35 0.35">
 
         <!-- ===== MODEL 3D GELAS KOPI (GLB) ===== -->
         <a-gltf-model id="coffee-model" src="#coffee-cup-model"></a-gltf-model>
@@ -251,12 +251,12 @@
   <!-- Main Script -->
   <script src="script.js"></script>
 
-  <!-- Scene load + error handling -->
   <script>
     (function() {
       var scene = document.getElementById("ar-scene");
       var loadingOverlay = document.getElementById("loading-overlay");
       var errorOverlay = document.getElementById("error-overlay");
+      var cameraConfirmed = false;
 
       function hideLoading() {
         if (loadingOverlay && !loadingOverlay.classList.contains("fade-out")) {
@@ -267,41 +267,52 @@
         }
       }
 
+      function showError() {
+        if (errorOverlay && !cameraConfirmed) {
+          hideLoading();
+          errorOverlay.classList.add("visible");
+        }
+      }
+
+      function hideError() {
+        cameraConfirmed = true;
+        if (errorOverlay) errorOverlay.classList.remove("visible");
+      }
+
+      // Intercept getUserMedia to detect camera success/failure
+      var origGetUserMedia = navigator.mediaDevices && navigator.mediaDevices.getUserMedia;
+      if (origGetUserMedia) {
+        navigator.mediaDevices.getUserMedia = function(constraints) {
+          return origGetUserMedia.call(navigator.mediaDevices, constraints)
+            .then(function(stream) {
+              // Camera succeeded — hide any error, confirm camera works
+              hideError();
+              return stream;
+            })
+            .catch(function(err) {
+              // Camera genuinely failed
+              showError();
+              throw err;
+            });
+        };
+      }
+
       if (scene) {
         scene.addEventListener("loaded", function() {
           setTimeout(hideLoading, 1500);
         });
       }
 
-      // Fallback: hide loading after 6s regardless
+      // Fallback: hide loading after 6s
       setTimeout(hideLoading, 6000);
 
-      // Camera error detection — only show error if truly no video stream
-      var cameraCheckAttempts = 0;
-      var maxAttempts = 3;
-      function checkCamera() {
-        cameraCheckAttempts++;
+      // Safety: if video is playing after 10s, ensure error is hidden
+      setTimeout(function() {
         var video = document.querySelector("video");
-        var hasVideo = video && (video.videoWidth > 0 || video.readyState >= 2);
-        if (hasVideo) {
-          // Camera is working, ensure error stays hidden
-          if (errorOverlay) errorOverlay.classList.remove("visible");
-          return;
+        if (video && video.videoWidth > 0) {
+          hideError();
         }
-        if (cameraCheckAttempts < maxAttempts) {
-          setTimeout(checkCamera, 3000);
-        } else {
-          // After all attempts, show error only if still no video
-          var v = document.querySelector("video");
-          if (!v || v.videoWidth === 0) {
-            if (errorOverlay) {
-              hideLoading();
-              errorOverlay.classList.add("visible");
-            }
-          }
-        }
-      }
-      setTimeout(checkCamera, 5000);
+      }, 10000);
     })();
   </script>
 
